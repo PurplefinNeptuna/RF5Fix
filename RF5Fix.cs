@@ -184,7 +184,7 @@ namespace RF5Fix
             {
                 Harmony.CreateAndPatchAll(typeof(UltrawidePatches));
             }
-
+            
             // Run LetterboxingPatch
             if (bLetterboxing.Value)
             {
@@ -683,8 +683,10 @@ namespace RF5Fix
                 if (bDisableCrossHatching.Value)
                 {
                     // This is super hacky
+                    if (__instance.Renderers == null || __instance.Renderers.Count < 1) return;
                     var meshRenderer = __instance.Renderers[0];
-                    var sketchTex = meshRenderer.material.GetTexture("_SketchTex");
+                    var sketchTex = meshRenderer?.material?.GetTexture("_SketchTex");
+                    if (sketchTex == null) return;
                     sketchTex.wrapMode = TextureWrapMode.Clamp;
                 }
 
